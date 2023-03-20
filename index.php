@@ -49,20 +49,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    
-    <?php 
-    
-    foreach ($hotels as $hotel) :
-        foreach ($hotel as $key => $data) :
 
-        ?>  
-        <h3> <?php echo $data ?></h3>
-        <?php
-        endforeach;
-    endforeach
-    ?>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Parcheggio</th>
+                <th scope="col">Voto</th>
+                <th scope="col">Distanza dal centro</th>
+            </tr>
+            <?php 
+            foreach ($hotels as $hotel) :
+            ?>
+            <tr>
+                <?php 
+                foreach ($hotel as $key => $data) :
+                    if ($key === 'name') {
+                    ?>
+                        <th scope="row"> <?php echo $data ?></th>   
 
+                    <?php     
+                    } else if ($key === 'parking') {
+                        ?>
+                            <td> <?php echo ($data) ? 'Sì' : 'No' ?> </td>
+                        <?php
+                    } else if ($key === 'vote') {
+                        ?>
+                            <td> <?php echo $data . '/5' ?> </td>
+                        <?php
+                    } else if ($key === 'distance_to_center') {
+                        ?>
+                            <td> <?php echo $data . ' ' . 'Km' ?> </td>
+                        <?php
+                    } else {
+                        ?>
+                            <td> <?php echo $data ?></td>
+                        <?php
+                    }
+                endforeach; 
+                ?>
+            </tr>
+            <?php 
+            endforeach;
+            ?>
+        </thead>
+    </table>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
