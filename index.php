@@ -58,12 +58,14 @@
     $vote = $_GET['vote'] ?? null;
     ?>
 
-    <form action="." class="ms-2" method="GET">
+    <h4 class="ms-2 mt-3">Filtra per...</h4>
+
+    <form action="." class="ms-2  mt-2" method="GET">
         <!-- <select name="parking">
             <option value="true">Con parcheggio</option>
             <option value="false">Senza parcheggio</option>
         </select> -->
-        <select name="vote" class="form-select-sm mt-3">
+        <select name="vote" class="form-select-sm mt-2">
             <option selected>Scegli il voto minimo</option>
             <option value="1">1/5</option>
             <option value="2">2/5</option>
@@ -89,35 +91,14 @@
             </tr>
             <?php 
             foreach ($hotels as $hotel) :
-                if (($parking === 'yes' && $hotel['parking'] || $parking !== 'yes') && ($hotel['vote'] >= intval($vote))) {
+                if (($parking === 'yes' && $hotel['parking'] || $parking !== 'yes') && ($hotel['vote'] >= intval($vote) || $vote === null)) {
             ?>
                     <tr>
-                        <?php 
-                        foreach ($hotel as $key => $data) :
-                            if ($key === 'name') {
-                                ?>
-                                    <th scope="row"> <?php echo $data ?></th>   
-
-                                <?php     
-                            } else if ($key === 'parking') {
-                                ?>
-                                    <td style="color: <?php echo ($data) ? 'green;' : 'red;' ?>"> <?php echo ($data) ? '&check;' : '&cross;' ?> </td>
-                                <?php
-                            } else if ($key === 'vote') {
-                                ?>
-                                    <td> <?php echo $data . '/5' ?> </td>
-                                <?php
-                            } else if ($key === 'distance_to_center') {
-                                ?>
-                                    <td> <?php echo $data . ' ' . 'Km' ?> </td>
-                                <?php
-                            } else {
-                                ?>
-                                    <td> <?php echo $data ?></td>
-                                <?php
-                            }
-                        endforeach; 
-                        ?>
+                        <th scope="row"> <?php echo $hotel['name'] ?> </th>
+                        <td> <?php echo $hotel['description'] ?> </th>
+                        <td style="color: <?php echo $hotel['parking'] ? 'green;' : 'red;' ?>"> <?php echo $hotel['parking'] ? '&check;' : '&cross;' ?> </th>
+                        <td> <?php echo $hotel['vote'] . '/5' ?> </th>
+                        <td> <?php echo $hotel['distance_to_center'] . ' ' . 'Km' ?> </th>
                     </tr>
             <?php 
                 }
