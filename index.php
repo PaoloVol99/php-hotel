@@ -55,6 +55,7 @@
 
     <?php
     $parking = $_GET['parking'] ?? null;
+    $vote = $_GET['vote'] ?? null;
     ?>
 
     <form action="." class="ms-2" method="GET">
@@ -62,6 +63,14 @@
             <option value="true">Con parcheggio</option>
             <option value="false">Senza parcheggio</option>
         </select> -->
+        <select name="vote" class="form-select-sm mt-3">
+            <option selected>Scegli il voto minimo</option>
+            <option value="1">1/5</option>
+            <option value="2">2/5</option>
+            <option value="3">3/5</option>
+            <option value="4">4/5</option>
+            <option value="5">5/5</option>
+        </select>
         <div class="mb-3 mt-3 form-check">
             <input class="form-check-input" type="checkbox" id="parking" name="parking" value="yes">
             <label class="form-check-label" for="parking">Parcheggio</label>
@@ -80,7 +89,7 @@
             </tr>
             <?php 
             foreach ($hotels as $hotel) :
-                if ($parking === 'yes' && $hotel['parking'] || $parking !== 'yes') {
+                if (($parking === 'yes' && $hotel['parking'] || $parking !== 'yes') && ($hotel['vote'] >= intval($vote))) {
             ?>
                     <tr>
                         <?php 
