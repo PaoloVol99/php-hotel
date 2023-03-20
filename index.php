@@ -53,6 +53,22 @@
 </head>
 <body>
 
+    <?php
+    $parking = $_GET['parking'] ?? null;
+    ?>
+
+    <form action="." class="ms-2" method="GET">
+        <!-- <select name="parking">
+            <option value="true">Con parcheggio</option>
+            <option value="false">Senza parcheggio</option>
+        </select> -->
+        <div class="mb-3 mt-3 form-check">
+            <input class="form-check-input" type="checkbox" id="parking" name="parking" value="yes">
+            <label class="form-check-label" for="parking">Parcheggio</label>
+        </div>
+        <button class="btn btn-success mb-5" type="submit">Filtra</button>
+    </form>
+
     <table class="table">
         <thead>
             <tr>
@@ -64,36 +80,38 @@
             </tr>
             <?php 
             foreach ($hotels as $hotel) :
+                if ($parking === 'yes' && $hotel['parking'] || $parking !== 'yes') {
             ?>
-            <tr>
-                <?php 
-                foreach ($hotel as $key => $data) :
-                    if ($key === 'name') {
-                    ?>
-                        <th scope="row"> <?php echo $data ?></th>   
+                    <tr>
+                        <?php 
+                        foreach ($hotel as $key => $data) :
+                            if ($key === 'name') {
+                                ?>
+                                    <th scope="row"> <?php echo $data ?></th>   
 
-                    <?php     
-                    } else if ($key === 'parking') {
+                                <?php     
+                            } else if ($key === 'parking') {
+                                ?>
+                                    <td style="color: <?php echo ($data) ? 'green;' : 'red;' ?>"> <?php echo ($data) ? '&check;' : '&cross;' ?> </td>
+                                <?php
+                            } else if ($key === 'vote') {
+                                ?>
+                                    <td> <?php echo $data . '/5' ?> </td>
+                                <?php
+                            } else if ($key === 'distance_to_center') {
+                                ?>
+                                    <td> <?php echo $data . ' ' . 'Km' ?> </td>
+                                <?php
+                            } else {
+                                ?>
+                                    <td> <?php echo $data ?></td>
+                                <?php
+                            }
+                        endforeach; 
                         ?>
-                            <td style="color: <?php echo ($data) ? 'green;' : 'red;' ?>"> <?php echo ($data) ? '&check;' : '&cross;' ?> </td>
-                        <?php
-                    } else if ($key === 'vote') {
-                        ?>
-                            <td> <?php echo $data . '/5' ?> </td>
-                        <?php
-                    } else if ($key === 'distance_to_center') {
-                        ?>
-                            <td> <?php echo $data . ' ' . 'Km' ?> </td>
-                        <?php
-                    } else {
-                        ?>
-                            <td> <?php echo $data ?></td>
-                        <?php
-                    }
-                endforeach; 
-                ?>
-            </tr>
+                    </tr>
             <?php 
+                }
             endforeach;
             ?>
         </thead>
