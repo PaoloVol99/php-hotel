@@ -75,7 +75,7 @@
                     <?php     
                     } else if ($key === 'parking') {
                         ?>
-                            <td> <?php echo ($data) ? 'Sì' : 'No' ?> </td>
+                            <td style="color: <?php echo ($data) ? 'green;' : 'red;' ?>"> <?php echo ($data) ? '&check;' : '&cross;' ?> </td>
                         <?php
                     } else if ($key === 'vote') {
                         ?>
